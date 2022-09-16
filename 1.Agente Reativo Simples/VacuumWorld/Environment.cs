@@ -48,6 +48,7 @@ public class Environment{
                         IsDirtyB = false;
                     }
                     Console.WriteLine(">>>Agent clear room "+(AgentLocation?"A":"B"));
+                    Console.WriteLine("");
                     break;
                 case ActionEnum.toLeft:
                     if(AgentLocation){
@@ -59,6 +60,8 @@ public class Environment{
                             IsDirtyB = random.Next(2) == 1;
                             if(IsDirtyB)
                                 Console.WriteLine("<<< room A got dirty!");
+                        else
+                            Console.WriteLine("");
                         }
                     }
                     break;
@@ -70,6 +73,8 @@ public class Environment{
                             IsDirtyA = random.Next(2) == 1;
                             if(IsDirtyA)
                                 Console.WriteLine("<<< room B got dirty!");
+                            else
+                                Console.WriteLine("");
                         }
                     }else{
                         Console.WriteLine("I can't go right");
