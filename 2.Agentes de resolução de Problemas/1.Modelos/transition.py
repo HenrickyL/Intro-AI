@@ -1,7 +1,4 @@
-from state import State
-
-
 class Transition:
-    def __init__(self,target: State, cost: int ):
+    def __init__(self,target: str, cost: int ):
         self.target = target
         self.cost = cost
