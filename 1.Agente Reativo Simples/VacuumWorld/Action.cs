@@ -1,3 +1,11 @@
+public enum ActionEnum{
+    aspire, toRight, toLeft
+}
+
 public class Action{
-    public string Name { get; set; }
+    public ActionEnum Name { get; set; }
+
+    public Action(ActionEnum name){
+        this.Name = name;
+    }
 }
