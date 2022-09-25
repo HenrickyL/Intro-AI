@@ -1,0 +1,20 @@
+Oradea: Zerind-71, Sibiu-151
+Zerind: Arad-75
+Arad: Sibiu-140, Timisoara-118
+Sibiu: Fagaras-99, Rimnicu Vilcea-80
+Timisoara: Lugoj-11
+Fagaras: Bucharest-211
+Rimnicu Vilcea: Craiova-147, Pitesti-97
+Lugoj: Mehadia-70
+Mehadia: Drobeta-75
+Drobeta: Craiova-120
+Craiova: Pitesti-138
+Pitesti:
+Bucharest: Giurgiu-90, Urziceni-85
+Giurgiu:
+Urziceni: Hirsova-98, Vaslui-142
+Hirsova: Eforie-86
+Eforie:
+Vaslui: Iasi-92
+Iasi: Neamt-87
+Neamt:
