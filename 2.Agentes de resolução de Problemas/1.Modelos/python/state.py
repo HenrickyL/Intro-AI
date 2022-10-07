@@ -3,6 +3,11 @@ class State:
     def __init__(self, name: str, edges:list[Transition] = []):
         self.name = name
         self.edges = edges
+        self.father = None
+    def copy(self):
+        res = State(self.name)
+        res.edges = self.edges.copy()
+        return res
     def getEdges(self):
         return [ [e.target,e.cost] for e in self.edges]
     def show(self):

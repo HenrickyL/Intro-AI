@@ -6,6 +6,7 @@ import java.util.List;
 public class State {
     public String name;
     public List<Transition> edges;
+    public State father;
     public State(String name, List<Transition> edges){
         this.name = name;
         this.edges = edges;

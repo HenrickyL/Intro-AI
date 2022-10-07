@@ -41,4 +41,8 @@ public class Map {
             return null;
         }
     }
+    public void search(String ini, String fin){
+        var edges = new Queue<State>();
+        var explored = new ArrayList<>
+    }
 }
