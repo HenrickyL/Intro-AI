@@ -19,22 +19,42 @@ class Map:
         return NULL
     #Breadth First Search
     @staticmethod
-    def bds(map:'Map', ini:str, fin: str):
-        edge  = [ini]
+    def bfs(map:'Map', ini:str, fin: str):
+        node = State(ini)
+        edge  = [node]
         read = set()
         while(edge):
-            print(edge)
-            name = edge.pop(0)
-            node = State(name)
-            read.add(name)
-            for e in map.states[name].edges:
+            print([e.name for e in edge])
+            node = edge.pop(0)
+            read.add(node.name)
+            for e in map.states[node.name].edges:
                 child = State(e.target)
-                child.father = name
-                node.edges.append(e.target)
-                if(child.name not in read or child.name not in edge):
+                child.father = node
+                node.edges.append(child)
+                if(child.name not in [key for key in read] and child.name not in edge):
                     if(child.name == fin):
                         return child
-                    edge.append(child.name)  
+                    edge.append(child)
+        return None
+    #Depth-first search
+    @staticmethod
+    def dfs(map:'Map', ini:str, fin: str):
+        node = State(ini)
+        edge  = [node]
+        read = set()
+        while(edge):
+            print([e.name for e in edge])
+            node = edge.pop()
+            read.add(node.name)
+            for e in map.states[node.name].edges:
+                child = State(e.target)
+                child.father = node
+                node.edges.append(child)
+                if(child.name not in [key for key in read] and child.name not in edge):
+                    if(child.name == fin):
+                        return child
+                    edge.append(child)
+        return None
                 
                 
     def readData(data:str):

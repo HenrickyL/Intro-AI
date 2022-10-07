@@ -8,6 +8,12 @@ class State:
         res = State(self.name)
         res.edges = self.edges.copy()
         return res
+    def fatherPath(self):
+        node = self
+        while(node != None):
+            print(node.name,end=' -> ')
+            node = node.father
+        print()
     def getEdges(self):
         return [ [e.target,e.cost] for e in self.edges]
     def show(self):

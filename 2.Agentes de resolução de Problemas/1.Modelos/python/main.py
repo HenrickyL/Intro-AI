@@ -1,6 +1,8 @@
 from map import Map
 map = Map.readData('data.txt')
 
-res = Map.bds(map,'Arad', 'Bucharest')
+bfsRes = Map.bfs(map,'Arad', 'Bucharest')
+dfsRes = Map.dfs(map,'Arad', 'Bucharest')
 
-print(res)
+bfsRes.fatherPath()
+dfsRes.fatherPath()
