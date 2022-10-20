@@ -1,20 +1,20 @@
 Oradea: Zerind-71, Sibiu-151
-Zerind: Arad-75
-Arad: Sibiu-140, Timisoara-118, Zerind-75
-Sibiu: Fagaras-99, Rimnicu Vilcea-80
-Timisoara: Lugoj-11
-Fagaras: Bucharest-211
-Rimnicu Vilcea: Craiova-147, Pitesti-97
-Lugoj: Mehadia-70
-Mehadia: Drobeta-75
-Drobeta: Craiova-120
-Craiova: Pitesti-138
-Pitesti:
-Bucharest: Giurgiu-90, Urziceni-85
-Giurgiu:
-Urziceni: Hirsova-98, Vaslui-142
-Hirsova: Eforie-86
-Eforie:
-Vaslui: Iasi-92
-Iasi: Neamt-87
-Neamt:
+Zerind: Arad-75, Oradea-71
+Arad: Zerind-75, Timisoara-118, Sibiu-140
+Sibiu: Rimnicu Vilcea-80, Fagaras-99, Oradea-151
+Timisoara: Lugoj-11, Arad-118
+Fagaras: Bucharest-211, Sibiu-99
+Rimnicu Vilcea: Craiova-147, Pitesti-97, Sibiu-80
+Lugoj: Mehadia-70, Timisoara-111
+Mehadia: Drobeta-75, Lugoj-70
+Drobeta: Craiova-120, Mehadia-75
+Craiova: Pitesti-138, Rimnicu Vilcea-146, Drobeta-120
+Pitesti: Rimnicu Vilcea-97, Bucharest-101, Craiova-138
+Bucharest: Giurgiu-90, Urziceni-85, Fagaras-211, Pitesti-101
+Giurgiu: Bucharest-90
+Urziceni: Hirsova-98, Vaslui-142, Bucharest-85
+Hirsova: Eforie-86, Urziceni-98
+Eforie: Hirsova-86
+Vaslui: Iasi-92, Urziceni-142
+Iasi: Neamt-87, Vaslui-92
+Neamt: Iasi-87
