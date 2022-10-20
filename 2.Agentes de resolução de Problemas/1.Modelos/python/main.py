@@ -1,7 +1,7 @@
 from map import Map
 map = Map.readData('data.txt')
-ini ='Lugoj'
-fin = 'Pitesti'
+ini ='Arad'
+fin = 'Bucharest'
 bfsRes = Map.bfs(map,ini, fin)
 print('-----------------')
 dfsRes = Map.dfs(map,ini, fin)
