@@ -1,4 +1,3 @@
-from ast import Delete
 from asyncio.windows_events import NULL
 from typing import Callable
 from PriorityQueue import PriorityQueue
@@ -117,7 +116,7 @@ class Map:
         fn = lambda node:  h(node) + node.cost
         f = lambda x,y: fn(x)< fn(y)
         return cls._search(map,ini,fin,f, isPrint=True)
-        
+
     ####################################################################    
     def readData(data:str):
         with open(data,'r') as file:
