@@ -1,9 +1,12 @@
+from ast import Delete
 from asyncio.windows_events import NULL
+from typing import Callable
 from PriorityQueue import PriorityQueue
 from node import Node
 from state import State
 from igraph import *
 from transition import Transition
+import json
 
 class Map:
     def __init__(self, states:dict[str, State]):
@@ -57,17 +60,21 @@ class Map:
                     edge.append(child)
         return None
                 
-                
+    def compare(x: Node, y: Node, method: Callable[[Node,Node],bool])-> bool:
+        return  method(x,y)
 
-    @staticmethod
-    def ucs(map:'Map', ini:str, fin: str):
+    #------------------------------------------------    
+    @classmethod
+    def _search(cls, map:'Map', ini:str, fin: str, compare: Callable[[Node,Node],bool], isPrint:bool = True ):
         initialState = map.states[ini]
         node = Node(initialState)
-        edge : PriorityQueue[Node] = PriorityQueue()
+        f :Callable[[Node,Node],bool]= compare
+        edge : PriorityQueue[Node] = PriorityQueue(fn=f)
         edge.insert(node)
         read: list[Node] = []
         while(edge):
-            print([e.state.name for e in edge.queue])
+            if(isPrint):
+                print([f'{e.state.name}-{e.cost}' for e in edge.queue])
             node: Node = edge.delete()
             if node.state.name == fin:
                 return node
@@ -76,11 +83,41 @@ class Map:
                 child = Node(map.states[e.target], e.cost + node.cost, node)
                 if(child.state.name not in [e.state.name for e in [*edge.queue, *read]]):
                     edge.insert(child)
-                elif child in edge:
-                    another = edge.remove(child)
-                    edge.insert(min(child, another))
+                elif child.state.name in [x.state.name for x in edge.queue]:
+                    another : Node= edge.remove(child)
+                    if(f(child, another)):
+                        edge.insert(child)
+                    else:
+                        edge.insert(another)
         return None
+    #------------------------------------------------    
+    @classmethod
+    def ucs(cls,map:'Map', ini:str, fin: str):
+        f :Callable[[Node,Node],bool] = lambda x,y : x.cost < y.cost
+        return cls._search(map, ini, fin, f, isPrint=True)
 
+    ####################################################################
+    @staticmethod
+    def readDistanceMap(path : str) -> dict[str,int] :
+        with open(path,'r') as file:
+            return json.load(file)
+
+    def _makeHeuristic(distanceMap : dict[str,int]) -> Callable[[Node],int]:
+        return lambda x: distanceMap[x.state.name]
+
+    @classmethod
+    def gcs(cls, map:'Map', ini:str, fin: str, distanceMap :dict[str,int]):
+        h =  cls._makeHeuristic(distanceMap)
+        f = lambda x,y: h(x) < h(y)
+        return cls._search(map,ini,fin,f, isPrint=True)
+
+    @classmethod
+    def aStar(cls, map:'Map', ini:str, fin: str, distanceMap :dict[str,int]):
+        h = cls._makeHeuristic(distanceMap)
+        fn = lambda node:  h(node) + node.cost
+        f = lambda x,y: fn(x)< fn(y)
+        return cls._search(map,ini,fin,f, isPrint=True)
+        
     ####################################################################    
     def readData(data:str):
         with open(data,'r') as file:

@@ -1,10 +1,11 @@
+from heapq import heapify
 from typing import Callable
 from node import Node
 from state import State
 
 
 class PriorityQueue(list):
-    def __init__(self, fn : Callable[[Node,Node],bool] = lambda x,y: x < y):
+    def __init__(self, fn : Callable[[Node,Node],bool] = lambda x,y: x.cost < y.cost):
         self.queue: list[Node] = []
         self.fn = fn
  
@@ -22,12 +23,18 @@ class PriorityQueue(list):
     def insert(self, data):
         self.queue.append(data)
  
+    def remove(self,data):
+        index = self.queue.index(data)
+        res = self.queue[index]
+        del self.queue[index]
+        heapify(self.queue)
+        return res
     # for popping an element based on Priority
     def delete(self):
         try:
             max_val = 0
             for i in range(len(self.queue)):
-                if(self.fn(self.queue[i], self.queue[max_val])):
+                if ( self.fn(self.queue[i], self.queue[max_val])):
                     max_val = i
             item = self.queue[max_val]
             del self.queue[max_val]
@@ -38,8 +45,11 @@ class PriorityQueue(list):
  
 if __name__ == '__main__':
     myQueue = PriorityQueue()
-    myQueue.insert(Node(State("aaa"), 10, None))
-    myQueue.insert(Node(State("bv"), 5, None))
-    myQueue.insert(Node(State("bv"), 7, None))
+    myQueue.insert(Node(State("1"), 8, None))
+    myQueue.insert(Node(State("2"), 7, None))
+    myQueue.insert(Node(State("3"), 6, None))
+    myQueue.insert(Node(State("4"), 10, None))
+    myQueue.insert(Node(State("5"), 1, None))
     
-    print(myQueue.delete())
+    while(myQueue.queue):
+        print(myQueue.delete())
