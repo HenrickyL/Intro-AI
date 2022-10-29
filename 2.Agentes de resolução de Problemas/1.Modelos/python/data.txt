@@ -1,6 +1,6 @@
 Oradea: Zerind-71, Sibiu-151
 Zerind: Arad-75, Oradea-71
-Arad: Zerind-75, Timisoara-118, Sibiu-140
+Arad: Sibiu-140, Timisoara-118, Zerind-75
 Sibiu: Rimnicu Vilcea-80, Fagaras-99, Oradea-151
 Timisoara: Lugoj-11, Arad-118
 Fagaras: Bucharest-211, Sibiu-99

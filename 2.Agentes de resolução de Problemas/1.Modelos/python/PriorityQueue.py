@@ -1,8 +1,12 @@
+from typing import Callable
 from node import Node
 from state import State
+
+
 class PriorityQueue(list):
-    def __init__(self):
-        self.queue = []
+    def __init__(self, fn : Callable[[Node,Node],bool] = lambda x,y: x < y):
+        self.queue: list[Node] = []
+        self.fn = fn
  
     def __len__(self) -> int:
         return self.queue.__len__()
@@ -23,7 +27,7 @@ class PriorityQueue(list):
         try:
             max_val = 0
             for i in range(len(self.queue)):
-                if self.queue[i] < self.queue[max_val]:
+                if(self.fn(self.queue[i], self.queue[max_val])):
                     max_val = i
             item = self.queue[max_val]
             del self.queue[max_val]

@@ -15,13 +15,18 @@ class Node:
 
     def fatherPath(self):
         node = self
+        stack: list[Node] = []
         while(node != None):
-            print(node.state.name,end=' -> ')
+            stack.append(node)
             node = node.father
+        while(stack):
+            node = stack.pop()
+            print(f"{node.state.name} - {node.cost}",end=' -> ')
+            
         print()
         
     def __lt__(self, __o: "Node") -> bool:
-        return self.cost <= __o.cost
+        return self.cost < __o.cost
     
     def __eq__(self, __o: "Node") -> bool:
         if(__o == None):

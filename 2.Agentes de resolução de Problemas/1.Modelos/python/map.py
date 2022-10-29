@@ -32,7 +32,7 @@ class Map:
             node = edge.pop(0)
             read.add(node.state.name)
             for e in node.state.edges:
-                child = Node(map.states[e.target] , e.cost, node)
+                child = Node(map.states[e.target] , e.cost+node.cost, node)
                 if(child.state.name not in [key for key in read] and child.state.name not in [e.state.name for e in edge]):
                     if(child.state.name == fin):
                         return child
@@ -50,7 +50,7 @@ class Map:
             node = edge.pop()
             read.add(node.state.name)
             for e in node.state.edges:
-                child = Node(map.states[e.target] , e.cost, node)
+                child = Node(map.states[e.target] , e.cost+node.cost, node)
                 if(child.state.name not in [key for key in read] and child.state.name not in [e.state.name for e in edge]):
                     if(child.state.name == fin):
                         return child
@@ -63,9 +63,9 @@ class Map:
     def ucs(map:'Map', ini:str, fin: str):
         initialState = map.states[ini]
         node = Node(initialState)
-        edge = PriorityQueue()
+        edge : PriorityQueue[Node] = PriorityQueue()
         edge.insert(node)
-        read = []
+        read: list[Node] = []
         while(edge):
             print([e.state.name for e in edge.queue])
             node: Node = edge.delete()
