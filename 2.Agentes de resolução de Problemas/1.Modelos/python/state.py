@@ -1,10 +1,10 @@
 from transition import Transition
 class State:
-    def __init__(self, name: str, edges:list[Transition] = []):
+    def __init__(self, name: str, edges = []):
         self.name = name
         self.edges = edges
 
-    def __eq__(self, __o: 'State') -> bool:
+    def __eq__(self, __o) :
         return self.name == __o.name
 
     def copy(self):

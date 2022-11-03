@@ -1,37 +1,31 @@
 from dataclasses import dataclass
-from typing import List
-from state import State
 
 @dataclass
 class Node:
-    state: "State"
-    cost: int
-    father: "Node"
-
-    def __init__(self, state:State, cost:int = 0 , father: 'Node' = None):
+    def __init__(self, state, cost:int = 0 , father: 'Node' = None):
         self.state = state
         self.cost = cost
         self.father = father
 
     def fatherPath(self):
         node = self
-        stack: list[Node] = []
+        stack = []
+        sol = ''
         while(node != None):
             stack.append(node)
             node = node.father
         while(stack):
             node = stack.pop()
-            print(f"{node.state.name} - {node.cost}",end=' -> ')
-            
-        print()
+            sol += node.state.name+", "
+        return sol
         
-    def __lt__(self, __o: "Node") -> bool:
+    def __lt__(self, __o) :
         return self.cost < __o.cost
     
-    def __eq__(self, __o: "Node") -> bool:
+    def __eq__(self, __o) :
         if(__o == None):
             return False
         return self.state == __o.state
 
-    def __str__(self) -> str:
+    def __str__(self) :
         return str(f'{self.state.name} - {self.cost}')

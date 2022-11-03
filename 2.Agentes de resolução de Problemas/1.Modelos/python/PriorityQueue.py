@@ -1,15 +1,14 @@
 from heapq import heapify
-from typing import Callable
 from node import Node
 from state import State
 
 
 class PriorityQueue(list):
-    def __init__(self, fn : Callable[[Node,Node],bool] = lambda x,y: x.cost < y.cost):
-        self.queue: list[Node] = []
+    def __init__(self, fn  = lambda x,y: x.cost < y.cost):
+        self.queue = []
         self.fn = fn
  
-    def __len__(self) -> int:
+    def __len__(self) :
         return self.queue.__len__()
 
     def __str__(self):

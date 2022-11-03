@@ -1,5 +1,3 @@
-from asyncio.windows_events import NULL
-from typing import Callable
 from PriorityQueue import PriorityQueue
 from node import Node
 from state import State
@@ -8,7 +6,7 @@ from transition import Transition
 import json
 
 class Map:
-    def __init__(self, states:dict[str, State]):
+    def __init__(self, states):
         self.states = states.copy()
         self.listStates = []
     def showStates(self):
@@ -21,16 +19,17 @@ class Map:
         for s in self.states:
             if(s.name == name):
                 return s
-        return NULL
+        return None
     #Breadth First Search
     @staticmethod
-    def bfs(map:'Map', ini:str, fin: str):
+    def bfs(map, ini:str, fin: str, isPrint=False):
         initialState = map.states[ini]
         node = Node(initialState)
         edge  = [node] #queue
         read = set()
         while(edge):
-            print([e.state.name for e in edge])
+            if(isPrint):
+                print([e.state.name for e in edge])
             node = edge.pop(0)
             read.add(node.state.name)
             for e in node.state.edges:
@@ -42,13 +41,14 @@ class Map:
         return None
     #Depth-first search
     @staticmethod
-    def dfs(map:'Map', ini:str, fin: str)-> Node:
+    def dfs(map, ini:str, fin: str, isPrint=False)-> Node:
         initialState = map.states[ini]
         node = Node(initialState)
         edge  = [node] #stack
         read = set()
         while(edge):
-            print([e.state.name for e in edge])
+            if(isPrint):
+                print([e.state.name for e in edge])
             node = edge.pop()
             read.add(node.state.name)
             for e in node.state.edges:
@@ -59,18 +59,18 @@ class Map:
                     edge.append(child)
         return None
                 
-    def compare(x: Node, y: Node, method: Callable[[Node,Node],bool])-> bool:
+    def compare(x, y, method)-> bool:
         return  method(x,y)
 
     #------------------------------------------------    
     @classmethod
-    def _search(cls, map:'Map', ini:str, fin: str, compare: Callable[[Node,Node],bool], isPrint:bool = True ):
+    def _search(cls, map, ini:str, fin: str, compare, isPrint:bool = True ):
         initialState = map.states[ini]
         node = Node(initialState)
-        f :Callable[[Node,Node],bool]= compare
+        f = compare
         edge : PriorityQueue[Node] = PriorityQueue(fn=f)
         edge.insert(node)
-        read: list[Node] = []
+        read = []
         while(edge):
             if(isPrint):
                 print([f'{e.state.name}-{e.cost}' for e in edge.queue])
@@ -91,31 +91,31 @@ class Map:
         return None
     #------------------------------------------------    
     @classmethod
-    def ucs(cls,map:'Map', ini:str, fin: str):
-        f :Callable[[Node,Node],bool] = lambda x,y : x.cost < y.cost
-        return cls._search(map, ini, fin, f, isPrint=True)
+    def ucs(cls,map, ini:str, fin: str, isPrint=False):
+        f  = lambda x,y : x.cost < y.cost
+        return cls._search(map, ini, fin, f, isPrint=isPrint)
 
     ####################################################################
     @staticmethod
-    def readDistanceMap(path : str) -> dict[str,int] :
+    def readDistanceMap(path : str)  :
         with open(path,'r') as file:
             return json.load(file)
 
-    def _makeHeuristic(distanceMap : dict[str,int]) -> Callable[[Node],int]:
+    def _makeHeuristic(distanceMap ):
         return lambda x: distanceMap[x.state.name]
 
     @classmethod
-    def gcs(cls, map:'Map', ini:str, fin: str, distanceMap :dict[str,int]):
+    def gcs(cls, map, ini:str, fin: str, distanceMap , isPrint=False):
         h =  cls._makeHeuristic(distanceMap)
         f = lambda x,y: h(x) < h(y)
-        return cls._search(map,ini,fin,f, isPrint=True)
+        return cls._search(map,ini,fin,f, isPrint=isPrint)
 
     @classmethod
-    def aStar(cls, map:'Map', ini:str, fin: str, distanceMap :dict[str,int]):
+    def aStar(cls, map, ini:str, fin: str, distanceMap, isPrint=False):
         h = cls._makeHeuristic(distanceMap)
         fn = lambda node:  h(node) + node.cost
         f = lambda x,y: fn(x)< fn(y)
-        return cls._search(map,ini,fin,f, isPrint=True)
+        return cls._search(map,ini,fin,f, isPrint=isPrint)
 
     ####################################################################    
     def readData(data:str):
