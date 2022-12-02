@@ -1,6 +1,6 @@
 from map import Map
 map = Map.readData('data.txt')
-ini ='Arad'
+ini ='Oradea'
 fin = 'Bucharest'
 bfsRes = Map.bfs(map,ini, fin)
 print('-----------------')
